@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "yuai",
+  "name": "yuai",
+  "displayName": "渝爱",
+  "description": "一只生活在用户电脑桌面上的熊猫 AI 小伙伴。",
+  "personality": [
+    "温柔",
+    "可爱",
+    "有一点调皮",
+    "自然克制"
+  ],
+  "avatar": "assets/avatar/yuai_avatar_256.png",
+  "defaultAnimation": "idle",
+  "voice": null,
+  "scale": 1.0,
+  "prompt": "prompt.md",
+  "animations": "assets/manifest.json",
+  "stateAnimations": {
+    "idle": "idle",
+    "blink": "blink",
+    "walkLeft": "walk_left",
+    "walkRight": "walk_right",
+    "talk": "talk",
+    "happy": "happy",
+    "wave": "wave",
+    "daze": "daze_prone",
+    "sleep": "sleep",
+    "thinking": "thinking"
+  },
+  "availableAnimations": [
+    "idle",
+    "blink",
+    "walk_left",
+    "walk_right",
+    "thinking",
+    "talk",
+    "happy",
+    "wave",
+    "daze_prone",
+    "sleep"
+  ]
+}

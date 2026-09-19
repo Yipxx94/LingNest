@@ -1,0 +1,141 @@
+{
+  "ok": false,
+  "frames_root": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames",
+  "states": [
+    "waiting",
+    "running",
+    "review"
+  ],
+  "errors": [
+    "expected 6 frame files for running, found 0",
+    "expected 6 frame files for review, found 0"
+  ],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "waiting",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": null,
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\waiting\\00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 22362,
+          "bbox": [
+            25,
+            5,
+            167,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\waiting\\01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 22538,
+          "bbox": [
+            25,
+            5,
+            166,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\waiting\\02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 20813,
+          "bbox": [
+            28,
+            5,
+            163,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\waiting\\03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 21246,
+          "bbox": [
+            28,
+            5,
+            164,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\waiting\\04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 21117,
+          "bbox": [
+            28,
+            5,
+            164,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\waiting\\05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 22479,
+          "bbox": [
+            25,
+            5,
+            166,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    },
+    {
+      "state": "running",
+      "expected_frames": 6,
+      "actual_frames": 0,
+      "extraction_method": null,
+      "ok": false,
+      "errors": [
+        "expected 6 frame files for running, found 0"
+      ],
+      "warnings": [],
+      "frames": []
+    },
+    {
+      "state": "review",
+      "expected_frames": 6,
+      "actual_frames": 0,
+      "extraction_method": null,
+      "ok": false,
+      "errors": [
+        "expected 6 frame files for review, found 0"
+      ],
+      "warnings": [],
+      "frames": []
+    }
+  ]
+}

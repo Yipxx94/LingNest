@@ -1,0 +1,146 @@
+{
+  "ok": true,
+  "frames_root": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames",
+  "states": [
+    "failed"
+  ],
+  "errors": [],
+  "warnings": [
+    "failed used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+  ],
+  "rows": [
+    {
+      "state": "failed",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "stable-slots",
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "failed used extraction method stable-slots; confirm motion playback remains stable and unclipped"
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 6237,
+          "bbox": [
+            54,
+            56,
+            137,
+            159
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 6169,
+          "bbox": [
+            54,
+            60,
+            137,
+            202
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 5585,
+          "bbox": [
+            54,
+            72,
+            137,
+            160
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 4299,
+          "bbox": [
+            54,
+            91,
+            137,
+            159
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 4015,
+          "bbox": [
+            54,
+            100,
+            137,
+            159
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 3796,
+          "bbox": [
+            54,
+            103,
+            137,
+            159
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 6,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 3814,
+          "bbox": [
+            54,
+            103,
+            137,
+            159
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 7,
+          "file": "C:\\Users\\xxye01\\Documents\\Codex\\2026-09-16\\referenced-chatgpt-conversation-this-is-an\\outputs\\yuai-ai-desktop-pet-assets\\frames\\failed\\07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 3744,
+          "bbox": [
+            54,
+            103,
+            137,
+            159
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ]
+    }
+  ]
+}

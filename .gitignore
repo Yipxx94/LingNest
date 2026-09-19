@@ -1,0 +1,37 @@
+# CMake build trees and generated files
+/build/
+/build-*/
+/out/
+CMakeUserPresets.json
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+
+# Qt Creator and Visual Studio user state
+*.user
+*.user.*
+.vs/
+.vscode/
+
+# Runtime data
+/logs/
+/data/
+/config/config.json
+/config/*.local.json
+/config/secrets.json
+*.log
+
+# Secrets
+.env
+.env.*
+!.env.example
+/APIKey.txt
+*.key
+*.pem
+
+# Windows-generated files
+Thumbs.db
+Desktop.ini

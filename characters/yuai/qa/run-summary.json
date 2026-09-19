@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "target": "Qt 6 / QML AI desktop pet first-stage asset pack",
+  "character_id": "yuai",
+  "generation_mode": "built-in image generation with local photo references",
+  "local_reference_count": 27,
+  "selected_reference_count": 10,
+  "network_references_used": false,
+  "action_count": 10,
+  "validated_asset_files": 70,
+  "action_contact_sheet": "qa/asset-contact-sheet.png",
+  "asset_validation": "qa/asset-validation.json",
+  "manifest": "assets/manifest.json",
+  "visual_spec": "docs/visual-spec.md",
+  "reference_selection": "references/selection.md",
+  "originals_overwritten": false,
+  "notes": [
+    "talk and sleep were regenerated after visual QA found scale popping",
+    "the final talk and sleep rows passed component extraction and structural review",
+    "avatar and icons are deterministic crops of the approved canonical base to prevent identity drift",
+    "daze_prone was generated as one coherent six-frame strip from the canonical base plus three local prone-pose references and passed frame/component validation"
+  ]
+}

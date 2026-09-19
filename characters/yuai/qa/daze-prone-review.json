@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "action": "daze_prone",
+  "source_strip": "decoded/daze-prone.png",
+  "frame_count": 6,
+  "frame_size": [
+    192,
+    208
+  ],
+  "format": "RGBA PNG",
+  "transparent_background": true,
+  "component_validation": "passed",
+  "clipping_validation": "passed",
+  "identity_review": "passed against canonical base and three selected local prone-pose references",
+  "errors": [],
+  "warnings": []
+}

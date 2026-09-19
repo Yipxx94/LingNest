@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "character_id": "yuai",
+  "display_name": "渝爱",
+  "target": "Qt 6 / QML desktop pet",
+  "format": "RGBA PNG",
+  "frame_size": [
+    192,
+    208
+  ],
+  "origin": "top-left",
+  "baseline_y": 198,
+  "actions": {
+    "idle": {
+      "frame_count": 6,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        280,
+        110,
+        110,
+        140,
+        140,
+        320
+      ],
+      "files": [
+        "assets/idle/yuai_idle_00.png",
+        "assets/idle/yuai_idle_01.png",
+        "assets/idle/yuai_idle_02.png",
+        "assets/idle/yuai_idle_03.png",
+        "assets/idle/yuai_idle_04.png",
+        "assets/idle/yuai_idle_05.png"
+      ],
+      "pipeline_source_state": "idle"
+    },
+    "blink": {
+      "frame_count": 6,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        500,
+        70,
+        90,
+        70,
+        450,
+        650
+      ],
+      "files": [
+        "assets/blink/yuai_blink_00.png",
+        "assets/blink/yuai_blink_01.png",
+        "assets/blink/yuai_blink_02.png",
+        "assets/blink/yuai_blink_03.png",
+        "assets/blink/yuai_blink_04.png",
+        "assets/blink/yuai_blink_05.png"
+      ],
+      "pipeline_source_state": "review"
+    },
+    "happy": {
+      "frame_count": 5,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        120,
+        120,
+        160,
+        240,
+        200
+      ],
+      "files": [
+        "assets/happy/yuai_happy_00.png",
+        "assets/happy/yuai_happy_01.png",
+        "assets/happy/yuai_happy_02.png",
+        "assets/happy/yuai_happy_03.png",
+        "assets/happy/yuai_happy_04.png"
+      ],
+      "pipeline_source_state": "jumping"
+    },
+    "thinking": {
+      "frame_count": 6,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        180,
+        180,
+        220,
+        300,
+        260,
+        220
+      ],
+      "files": [
+        "assets/thinking/yuai_thinking_00.png",
+        "assets/thinking/yuai_thinking_01.png",
+        "assets/thinking/yuai_thinking_02.png",
+        "assets/thinking/yuai_thinking_03.png",
+        "assets/thinking/yuai_thinking_04.png",
+        "assets/thinking/yuai_thinking_05.png"
+      ],
+      "pipeline_source_state": "waiting"
+    },
+    "talk": {
+      "frame_count": 6,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        100,
+        90,
+        90,
+        120,
+        90,
+        110
+      ],
+      "files": [
+        "assets/talk/yuai_talk_00.png",
+        "assets/talk/yuai_talk_01.png",
+        "assets/talk/yuai_talk_02.png",
+        "assets/talk/yuai_talk_03.png",
+        "assets/talk/yuai_talk_04.png",
+        "assets/talk/yuai_talk_05.png"
+      ],
+      "pipeline_source_state": "running"
+    },
+    "wave": {
+      "frame_count": 4,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        140,
+        140,
+        180,
+        280
+      ],
+      "files": [
+        "assets/wave/yuai_wave_00.png",
+        "assets/wave/yuai_wave_01.png",
+        "assets/wave/yuai_wave_02.png",
+        "assets/wave/yuai_wave_03.png"
+      ],
+      "pipeline_source_state": "waving"
+    },
+    "daze_prone": {
+      "frame_count": 6,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        700,
+        360,
+        420,
+        180,
+        420,
+        700
+      ],
+      "files": [
+        "assets/daze_prone/yuai_daze_prone_00.png",
+        "assets/daze_prone/yuai_daze_prone_01.png",
+        "assets/daze_prone/yuai_daze_prone_02.png",
+        "assets/daze_prone/yuai_daze_prone_03.png",
+        "assets/daze_prone/yuai_daze_prone_04.png",
+        "assets/daze_prone/yuai_daze_prone_05.png"
+      ],
+      "pipeline_source_state": "daze-prone"
+    },
+    "sleep": {
+      "frame_count": 8,
+      "loop": true,
+      "loop_start_frame": 4,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        220,
+        220,
+        240,
+        260,
+        520,
+        520,
+        520,
+        700
+      ],
+      "files": [
+        "assets/sleep/yuai_sleep_00.png",
+        "assets/sleep/yuai_sleep_01.png",
+        "assets/sleep/yuai_sleep_02.png",
+        "assets/sleep/yuai_sleep_03.png",
+        "assets/sleep/yuai_sleep_04.png",
+        "assets/sleep/yuai_sleep_05.png",
+        "assets/sleep/yuai_sleep_06.png",
+        "assets/sleep/yuai_sleep_07.png"
+      ],
+      "pipeline_source_state": "failed"
+    },
+    "walk_left": {
+      "frame_count": 8,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "files": [
+        "assets/walk_left/yuai_walk_left_00.png",
+        "assets/walk_left/yuai_walk_left_01.png",
+        "assets/walk_left/yuai_walk_left_02.png",
+        "assets/walk_left/yuai_walk_left_03.png",
+        "assets/walk_left/yuai_walk_left_04.png",
+        "assets/walk_left/yuai_walk_left_05.png",
+        "assets/walk_left/yuai_walk_left_06.png",
+        "assets/walk_left/yuai_walk_left_07.png"
+      ],
+      "pipeline_source_state": "running-left"
+    },
+    "walk_right": {
+      "frame_count": 8,
+      "loop": true,
+      "frame_size": [
+        192,
+        208
+      ],
+      "durations_ms": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        220
+      ],
+      "files": [
+        "assets/walk_right/yuai_walk_right_00.png",
+        "assets/walk_right/yuai_walk_right_01.png",
+        "assets/walk_right/yuai_walk_right_02.png",
+        "assets/walk_right/yuai_walk_right_03.png",
+        "assets/walk_right/yuai_walk_right_04.png",
+        "assets/walk_right/yuai_walk_right_05.png",
+        "assets/walk_right/yuai_walk_right_06.png",
+        "assets/walk_right/yuai_walk_right_07.png"
+      ],
+      "pipeline_source_state": "running-right"
+    }
+  },
+  "avatar": [
+    "assets/avatar/yuai_avatar_512.png",
+    "assets/avatar/yuai_avatar_256.png"
+  ],
+  "icons": [
+    "assets/icons/yuai_icon_256.png",
+    "assets/icons/yuai_icon_128.png",
+    "assets/icons/yuai_icon_64.png",
+    "assets/icons/yuai_icon_48.png",
+    "assets/icons/yuai_icon_32.png"
+  ]
+}

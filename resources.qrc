@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file alias="Main.qml">qml/Main.qml</file>
+        <file alias="components/WarmMenuButton.qml">qml/components/WarmMenuButton.qml</file>
+        <file alias="components/LiquidGlassSurface.qml">qml/components/LiquidGlassSurface.qml</file>
+        <file alias="windows/ChatWindow.qml">qml/windows/ChatWindow.qml</file>
+        <file alias="windows/PetContextMenu.qml">qml/windows/PetContextMenu.qml</file>
+        <file alias="windows/PetHoverDock.qml">qml/windows/PetHoverDock.qml</file>
+        <file alias="windows/SettingsWindow.qml">qml/windows/SettingsWindow.qml</file>
+        <file alias="windows/SpeechBubbleWindow.qml">qml/windows/SpeechBubbleWindow.qml</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="lingnest.ico">resources/icons/lingnest.ico</file>
+        <file alias="lingnest_tray_16.png">resources/icons/lingnest_tray_16.png</file>
+        <file alias="lingnest_tray_20.png">resources/icons/lingnest_tray_20.png</file>
+        <file alias="lingnest_tray_24.png">resources/icons/lingnest_tray_24.png</file>
+        <file alias="lingnest_tray_32.png">resources/icons/lingnest_tray_32.png</file>
+        <file alias="lingnest_tray_48.png">resources/icons/lingnest_tray_48.png</file>
+        <file alias="lingnest_tray_64.png">resources/icons/lingnest_tray_64.png</file>
+        <file alias="lingnest_tray_128.png">resources/icons/lingnest_tray_128.png</file>
+        <file alias="lingnest_tray_256.png">resources/icons/lingnest_tray_256.png</file>
+    </qresource>
+</RCC>

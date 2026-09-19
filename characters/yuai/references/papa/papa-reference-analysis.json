@@ -1,0 +1,93 @@
+[
+  {
+    "index": 1,
+    "filename": "26.4.22 趴趴熊_1_可爱的爱_来自小红书网页版.jpg",
+    "path": "C:\\Users\\xxye01\\Downloads\\yuai\\papa\\26.4.22 趴趴熊_1_可爱的爱_来自小红书网页版.jpg",
+    "width": 1080,
+    "height": 2204,
+    "megapixels": 2.38,
+    "aspect_ratio": 0.49,
+    "bytes": 356641,
+    "sha256": "c3e45c1b74fca9cdc907c385ff3ecf1fceb885a58736faa17d85da4d7773db18",
+    "dhash": "5ddd11046df0662e",
+    "edge_variance": 774.5
+  },
+  {
+    "index": 2,
+    "filename": "26.4.22 趴趴熊_2_可爱的爱_来自小红书网页版.jpg",
+    "path": "C:\\Users\\xxye01\\Downloads\\yuai\\papa\\26.4.22 趴趴熊_2_可爱的爱_来自小红书网页版.jpg",
+    "width": 1080,
+    "height": 2219,
+    "megapixels": 2.397,
+    "aspect_ratio": 0.4867,
+    "bytes": 330553,
+    "sha256": "b33ba4e105be80d8c5f777c7a99d118e0577e9f11f76b81362269d9376d8522f",
+    "dhash": "3a331137b47466d2",
+    "edge_variance": 643.99
+  },
+  {
+    "index": 3,
+    "filename": "睡美熊照片集合_2_可爱的爱_来自小红书网页版.jpg",
+    "path": "C:\\Users\\xxye01\\Downloads\\yuai\\papa\\睡美熊照片集合_2_可爱的爱_来自小红书网页版.jpg",
+    "width": 1080,
+    "height": 1916,
+    "megapixels": 2.069,
+    "aspect_ratio": 0.5637,
+    "bytes": 263638,
+    "sha256": "00f4c0676b6ee3a3476233165c7dd1cd1bfa08bee674b4adaf4a17e642ffd9da",
+    "dhash": "3431386731366672",
+    "edge_variance": 516.71
+  },
+  {
+    "index": 4,
+    "filename": "睡美熊照片集合_3_可爱的爱_来自小红书网页版.jpg",
+    "path": "C:\\Users\\xxye01\\Downloads\\yuai\\papa\\睡美熊照片集合_3_可爱的爱_来自小红书网页版.jpg",
+    "width": 1080,
+    "height": 1438,
+    "megapixels": 1.553,
+    "aspect_ratio": 0.751,
+    "bytes": 176067,
+    "sha256": "e0ff7a0c6b2ddb0612ee68f0eeb050252f101912285db8ba748844a0e1b30097",
+    "dhash": "ffc457d8eca2f694",
+    "edge_variance": 105.45
+  },
+  {
+    "index": 5,
+    "filename": "睡美熊照片集合_4_可爱的爱_来自小红书网页版.jpg",
+    "path": "C:\\Users\\xxye01\\Downloads\\yuai\\papa\\睡美熊照片集合_4_可爱的爱_来自小红书网页版.jpg",
+    "width": 1080,
+    "height": 1409,
+    "megapixels": 1.522,
+    "aspect_ratio": 0.7665,
+    "bytes": 215653,
+    "sha256": "574c0e0e712921a70d5e930c1c2d71c101f5eee83c5dfc7ab8558fde644871bc",
+    "dhash": "ff91d4d2d26ced22",
+    "edge_variance": 249.3
+  },
+  {
+    "index": 6,
+    "filename": "睡美熊照片集合_5_可爱的爱_来自小红书网页版.jpg",
+    "path": "C:\\Users\\xxye01\\Downloads\\yuai\\papa\\睡美熊照片集合_5_可爱的爱_来自小红书网页版.jpg",
+    "width": 1080,
+    "height": 1438,
+    "megapixels": 1.553,
+    "aspect_ratio": 0.751,
+    "bytes": 223003,
+    "sha256": "06c53f85545a91d52568b96c23b8c2e4f21ebd7ec511f212dbd46baf98cbdc0e",
+    "dhash": "23bc9acca4280c6c",
+    "edge_variance": 296.04
+  },
+  {
+    "index": 7,
+    "filename": "睡美熊照片集合_6_可爱的爱_来自小红书网页版.jpg",
+    "path": "C:\\Users\\xxye01\\Downloads\\yuai\\papa\\睡美熊照片集合_6_可爱的爱_来自小红书网页版.jpg",
+    "width": 1080,
+    "height": 1502,
+    "megapixels": 1.622,
+    "aspect_ratio": 0.719,
+    "bytes": 226251,
+    "sha256": "6313120ad40de9e302758d22d3095ed4c137b1c17939b50272787ced1a1b1b3c",
+    "dhash": "3440d366213895d7",
+    "edge_variance": 267.18
+  }
+]
