@@ -8,6 +8,13 @@ LingNest 是一个面向 Windows 10/11 的多角色 AI 桌宠框架。首个角�
 
 当前版本号为 `v0.1.1`。Windows x64 首选交付物是单文件安装程序；同时提供完整的免安装 ZIP。两种形式都由 Release 构建、`windeployqt`、应用本地 VC++ 运行库、角色运行资源和用户文档组成。构建过程会拒绝 API Key、用户配置、数据库、日志和调试符号进入发布包，并同时生成 SHA-256 与机器可读清单。
 
+## 下载
+
+- **v0.1.1（当前版本）**：[安装版 EXE](packages/v0.1.1/LingNest-v0.1.1-windows-x64-setup.exe?raw=1) · [免安装 ZIP](packages/v0.1.1/LingNest-v0.1.1-windows-x64-portable.zip?raw=1) · [更新说明](docs/release-notes-v0.1.1.md)
+- **v0.1.0（历史版本）**：[免安装 ZIP](packages/v0.1.0/LingNest-v0.1.0-windows-x64-portable.zip?raw=1) · [更新说明](docs/release-notes-v0.1.0.md)
+
+推荐普通用户下载 `v0.1.1` 安装版。所有版本文件、SHA-256 校验值和清单统一维护在 [`packages/`](packages/)；`v0.1.0` 发布时尚未提供安装版。
+
 本机只有 Qt 5.15.2 兼容工具链，因此首包仍是兼容构建；Qt 5 的公网 HTTPS 依赖已经停止维护的 OpenSSL 1.1.1，本项目不会从其他软件目录拼装该依赖。正式联网发行前应使用 Qt 6 重建并在干净 Windows 上签收。本地 HTTP 兼容服务与其余桌宠能力不受此限制。
 
 已实现的窗口行为：

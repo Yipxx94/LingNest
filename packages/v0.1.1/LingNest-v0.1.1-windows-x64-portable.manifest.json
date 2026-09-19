@@ -1,0 +1,12 @@
+{
+  "name": "LingNest",
+  "version": "0.1.1",
+  "platform": "windows-x64",
+  "format": "portable-zip",
+  "qtVersion": "5.15.2",
+  "builtAtUtc": "2026-09-19T08:28:48Z",
+  "archive": "LingNest-v0.1.1-windows-x64-portable.zip",
+  "archiveBytes": 35208943,
+  "archiveSha256": "a2f4fc945747f32e0cf321485c8f2b9967ac88100c3d989ba5d741c1872d7ffe",
+  "fileCount": 496
+}
