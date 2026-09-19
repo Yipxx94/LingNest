@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(
     LingNest
-    VERSION 0.1.0
+    VERSION 0.1.1
     DESCRIPTION "A multi-character AI desktop pet framework"
     LANGUAGES CXX
 )
@@ -222,4 +222,41 @@ if(WIN32)
         COMMENT "Creating LingNest ${PROJECT_VERSION} Windows portable package"
         VERBATIM
     )
+
+    set(LINGNEST_INSTALLER_BASENAME
+        "LingNest-v${PROJECT_VERSION}-windows-${LINGNEST_PACKAGE_ARCH}-setup")
+    find_program(LINGNEST_ISCC_EXECUTABLE
+        NAMES ISCC iscc
+        HINTS
+            "$ENV{LOCALAPPDATA}/Programs/Inno Setup 6"
+            "C:/Program Files (x86)/Inno Setup 6"
+            "C:/Program Files/Inno Setup 6")
+
+    if(LINGNEST_ISCC_EXECUTABLE)
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/installer")
+        configure_file(
+            "${CMAKE_CURRENT_SOURCE_DIR}/installer/LingNest.iss.in"
+            "${CMAKE_BINARY_DIR}/installer/LingNest.iss"
+            @ONLY)
+
+        add_custom_target(package_installer
+            COMMAND "${LINGNEST_ISCC_EXECUTABLE}"
+                "/Qp"
+                "${CMAKE_BINARY_DIR}/installer/LingNest.iss"
+            COMMAND ${CMAKE_COMMAND}
+                "-DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}"
+                "-DPACKAGE_ROOT=${CMAKE_BINARY_DIR}/package"
+                "-DPORTABLE_BASENAME=${LINGNEST_PACKAGE_BASENAME}"
+                "-DINSTALLER_BASENAME=${LINGNEST_INSTALLER_BASENAME}"
+                "-DPROJECT_VERSION=${PROJECT_VERSION}"
+                -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/PublishWindowsRelease.cmake"
+            DEPENDS package_windows
+            COMMENT "Creating LingNest ${PROJECT_VERSION} Windows installer and dist release"
+            VERBATIM
+        )
+    else()
+        message(WARNING
+            "Inno Setup 6 was not found. The package_installer target will not be available. "
+            "Install Inno Setup 6 or set LINGNEST_ISCC_EXECUTABLE explicitly.")
+    endif()
 endif()

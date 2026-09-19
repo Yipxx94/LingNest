@@ -1,0 +1,52 @@
+#define MyAppName "LingNest"
+#define MyAppVersion "@PROJECT_VERSION@"
+#define MyAppPublisher "LingNest Project"
+#define MyAppExeName "LingNest.exe"
+#define MyStageDir "@CMAKE_BINARY_DIR@/package/@LINGNEST_PACKAGE_BASENAME@"
+#define MyOutputDir "@CMAKE_BINARY_DIR@/package"
+#define MyOutputBaseFilename "@LINGNEST_INSTALLER_BASENAME@"
+
+[Setup]
+AppId={{F287590F-4F24-40D4-B70D-D493F5893626}
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
+AppPublisher={#MyAppPublisher}
+DefaultDirName={localappdata}\Programs\{#MyAppName}
+DefaultGroupName={#MyAppName}
+DisableProgramGroupPage=yes
+OutputDir={#MyOutputDir}
+OutputBaseFilename={#MyOutputBaseFilename}
+SetupIconFile=@CMAKE_SOURCE_DIR@/resources/icons/lingnest.ico
+UninstallDisplayIcon={app}\{#MyAppExeName}
+Compression=lzma2/ultra64
+SolidCompression=yes
+WizardStyle=modern
+PrivilegesRequired=lowest
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+MinVersion=10.0
+CloseApplications=yes
+RestartApplications=no
+VersionInfoVersion={#MyAppVersion}.0
+VersionInfoCompany={#MyAppPublisher}
+VersionInfoDescription=LingNest AI Desktop Pet Setup
+VersionInfoProductName={#MyAppName}
+VersionInfoProductVersion={#MyAppVersion}
+SetupLogging=yes
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+
+[Tasks]
+Name: "desktopicon"; Description: "Create a desktop shortcut"; GroupDescription: "Additional shortcuts:"; Flags: unchecked
+
+[Files]
+Source: "{#MyStageDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+[Icons]
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; Tasks: desktopicon
+
+[Run]
+Filename: "{app}\{#MyAppExeName}"; Description: "Launch {#MyAppName}"; Flags: nowait postinstall skipifsilent

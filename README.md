@@ -6,7 +6,7 @@ LingNest 是一个面向 Windows 10/11 的多角色 AI 桌宠框架。首个角�
 
 ## 首个发布候选
 
-当前版本号为 `v0.1.0`。Windows x64 免安装包由 Release 构建、`windeployqt`、应用本地 VC++ 运行库、角色运行资源和用户文档组成；构建过程会拒绝 API Key、用户配置、数据库、日志和调试符号进入发布包，并同时生成 SHA-256 与机器可读清单。
+当前版本号为 `v0.1.1`。Windows x64 首选交付物是单文件安装程序；同时提供完整的免安装 ZIP。两种形式都由 Release 构建、`windeployqt`、应用本地 VC++ 运行库、角色运行资源和用户文档组成。构建过程会拒绝 API Key、用户配置、数据库、日志和调试符号进入发布包，并同时生成 SHA-256 与机器可读清单。
 
 本机只有 Qt 5.15.2 兼容工具链，因此首包仍是兼容构建；Qt 5 的公网 HTTPS 依赖已经停止维护的 OpenSSL 1.1.1，本项目不会从其他软件目录拼装该依赖。正式联网发行前应使用 Qt 6 重建并在干净 Windows 上签收。本地 HTTP 兼容服务与其余桌宠能力不受此限制。
 
@@ -93,16 +93,16 @@ ctest --preset debug
 ./build/debug/LingNest.exe
 ```
 
-生成 Windows Release 便携包：
+生成 Windows Release 安装程序与便携包（需要 Inno Setup 6）：
 
 ```powershell
 cmake --preset release -DCMAKE_PREFIX_PATH=C:/Qt/6.x.x/msvc2022_64
 cmake --build --preset release
 ctest --preset release
-cmake --build --preset release --target package_windows
+cmake --build --preset release --target package_installer
 ```
 
-产物位于 `build/release/package/`。
+可直接交付的产物位于仓库根目录的 `dist/`。推荐分发其中的 `*-setup.exe`；便携用户必须完整解压 `*-portable.zip` 后运行。`build/release/LingNest.exe` 只是开发构建产物，不能单独复制到其他电脑。
 
 ## 角色包
 
@@ -123,8 +123,9 @@ cmake --build --preset release --target package_windows
 - [用户指南](docs/user-guide.md)
 - [隐私说明](docs/privacy.md)
 - [第三方组件与素材记录](docs/third-party-notices.md)
-- [v0.1.0 发布说明](docs/release-notes-v0.1.0.md)
-- [v0.1.0 验证记录](docs/release-validation-v0.1.0.md)
+- [v0.1.1 发布说明](docs/release-notes-v0.1.1.md)
+- [v0.1.1 验证记录](docs/release-validation-v0.1.1.md)
+- [v0.1.0 历史发布说明](docs/release-notes-v0.1.0.md)
 
 ## 本地数据与密钥
 

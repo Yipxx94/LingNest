@@ -42,8 +42,8 @@ foreach(document IN ITEMS
         user-guide.md
         privacy.md
         third-party-notices.md
-        release-notes-v0.1.0.md
-        release-validation-v0.1.0.md)
+        "release-notes-v${PROJECT_VERSION}.md"
+        "release-validation-v${PROJECT_VERSION}.md")
     if(NOT EXISTS "${SOURCE_DIR}/docs/${document}")
         message(FATAL_ERROR "Required release document is missing: docs/${document}")
     endif()
