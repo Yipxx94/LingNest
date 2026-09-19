@@ -4,18 +4,20 @@
 
 ## v0.1.1（当前版本）
 
-- [安装版：LingNest-v0.1.1-windows-x64-setup.exe](v0.1.1/LingNest-v0.1.1-windows-x64-setup.exe?raw=1)
-- [安装版 SHA-256](v0.1.1/LingNest-v0.1.1-windows-x64-setup.sha256)
-- [免安装版：LingNest-v0.1.1-windows-x64-portable.zip](v0.1.1/LingNest-v0.1.1-windows-x64-portable.zip?raw=1)
-- [免安装版 SHA-256](v0.1.1/LingNest-v0.1.1-windows-x64-portable.sha256)
+- [GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.1)
+- [安装版：LingNest-v0.1.1-windows-x64-setup.exe](https://github.com/Yipxx94/LingNest/releases/download/v0.1.1/LingNest-v0.1.1-windows-x64-setup.exe)
+- [安装版 SHA-256](https://github.com/Yipxx94/LingNest/releases/download/v0.1.1/LingNest-v0.1.1-windows-x64-setup.sha256)
+- [免安装版：LingNest-v0.1.1-windows-x64-portable.zip](https://github.com/Yipxx94/LingNest/releases/download/v0.1.1/LingNest-v0.1.1-windows-x64-portable.zip)
+- [免安装版 SHA-256](https://github.com/Yipxx94/LingNest/releases/download/v0.1.1/LingNest-v0.1.1-windows-x64-portable.sha256)
 - [更新说明](../docs/release-notes-v0.1.1.md)
 
 安装版是推荐下载项。免安装版必须完整解压后再运行，不能只复制其中的 `LingNest.exe`。
 
 ## v0.1.0（历史版本）
 
-- [免安装版：LingNest-v0.1.0-windows-x64-portable.zip](v0.1.0/LingNest-v0.1.0-windows-x64-portable.zip?raw=1)
-- [免安装版 SHA-256](v0.1.0/LingNest-v0.1.0-windows-x64-portable.sha256)
+- [GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.0)
+- [免安装版：LingNest-v0.1.0-windows-x64-portable.zip](https://github.com/Yipxx94/LingNest/releases/download/v0.1.0/LingNest-v0.1.0-windows-x64-portable.zip)
+- [免安装版 SHA-256](https://github.com/Yipxx94/LingNest/releases/download/v0.1.0/LingNest-v0.1.0-windows-x64-portable.sha256)
 - [更新说明](../docs/release-notes-v0.1.0.md)
 
 `v0.1.0` 发布时只有免安装版；单文件安装程序从 `v0.1.1` 开始提供。

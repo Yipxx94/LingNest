@@ -10,8 +10,8 @@ LingNest 是一个面向 Windows 10/11 的多角色 AI 桌宠框架。首个角�
 
 ## 下载
 
-- **v0.1.1（当前版本）**：[安装版 EXE](packages/v0.1.1/LingNest-v0.1.1-windows-x64-setup.exe?raw=1) · [免安装 ZIP](packages/v0.1.1/LingNest-v0.1.1-windows-x64-portable.zip?raw=1) · [更新说明](docs/release-notes-v0.1.1.md)
-- **v0.1.0（历史版本）**：[免安装 ZIP](packages/v0.1.0/LingNest-v0.1.0-windows-x64-portable.zip?raw=1) · [更新说明](docs/release-notes-v0.1.0.md)
+- **v0.1.1（当前版本）**：[GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.1) · [更新说明](docs/release-notes-v0.1.1.md)
+- **v0.1.0（历史版本）**：[GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.0) · [更新说明](docs/release-notes-v0.1.0.md)
 
 推荐普通用户下载 `v0.1.1` 安装版。所有版本文件、SHA-256 校验值和清单统一维护在 [`packages/`](packages/)；`v0.1.0` 发布时尚未提供安装版。
 
@@ -137,3 +137,7 @@ cmake --build --preset release --target package_installer
 ## 本地数据与密钥
 
 运行时配置、数据库、日志和密钥不进入 Git。窗口位置与非敏感 AI 参数以原子写入方式保存在 Qt 标准应用配置目录的 `config.json` 中；聊天记录、结构化长期记忆与用户资料保存在同一应用数据目录的 `memory.sqlite3` 中。API Key 通过独立凭据接口保存到 Windows Credential Manager，不会写入源码、角色包或普通配置文件。
+
+## 开源许可
+
+LingNest 使用 [MIT License](LICENSE) 开源。
