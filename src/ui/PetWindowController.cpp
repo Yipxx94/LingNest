@@ -236,10 +236,29 @@ bool PetWindowController::endDrag()
     }
 
     if (!m_window.isNull()) {
-        m_walkPositionX = m_window->x();
         m_dragMoved = m_dragMoved
             || (m_window->position() - m_dragStartWindowPosition).manhattanLength()
                 >= dragThreshold();
+
+        // Native system moves do not pass through updateDrag(), so constrain
+        // the actual window (not only its saved placement) on mouse release.
+        QScreen* targetScreen = QGuiApplication::screenAt(
+            m_window->geometry().center());
+        if (targetScreen == nullptr) {
+            targetScreen = m_window->screen();
+        }
+        if (targetScreen == nullptr) {
+            targetScreen = bestScreenFor(m_window->position());
+        }
+        if (targetScreen != nullptr) {
+            const QPoint boundedPosition = clampToScreen(
+                m_window->position(), targetScreen);
+            if (boundedPosition != m_window->position()) {
+                m_window->setPosition(boundedPosition);
+                m_dragMoved = true;
+            }
+        }
+        m_walkPositionX = m_window->x();
     }
     m_dragging = false;
     m_systemMoveActive = false;
@@ -247,6 +266,31 @@ bool PetWindowController::endDrag()
         savePosition();
     }
     return m_dragMoved;
+}
+
+QVariantMap PetWindowController::availableScreenGeometry() const
+{
+    QScreen* targetScreen = nullptr;
+    if (!m_window.isNull()) {
+        targetScreen = QGuiApplication::screenAt(m_window->geometry().center());
+        if (targetScreen == nullptr) {
+            targetScreen = m_window->screen();
+        }
+    }
+    if (targetScreen == nullptr) {
+        targetScreen = QGuiApplication::primaryScreen();
+    }
+    if (targetScreen == nullptr) {
+        return {};
+    }
+
+    const QRect available = targetScreen->availableGeometry();
+    return {
+        {QStringLiteral("x"), available.x()},
+        {QStringLiteral("y"), available.y()},
+        {QStringLiteral("width"), available.width()},
+        {QStringLiteral("height"), available.height()}
+    };
 }
 
 QVariantMap PetWindowController::boundedPopupPosition(

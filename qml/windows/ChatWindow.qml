@@ -146,63 +146,12 @@ Window {
         clearMaterial: false
         highlighted: input.activeFocus
 
-        Rectangle {
-            id: leadingBadge
-
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-            anchors.verticalCenter: parent.verticalCenter
-            width: 36
-            height: 36
-            radius: 18
-            color: leadingMouse.containsMouse ? "#6AA9C8F8" : "#52FFFFFF"
-            border.width: 1
-            border.color: "#74FFFFFF"
-
-            Behavior on color { ColorAnimation { duration: 90 } }
-
-            Text {
-                anchors.centerIn: parent
-                text: chatController.busy
-                      ? "···"
-                      : input.text.length > 0 ? "×" : "+"
-                color: "#657386"
-                font.pixelSize: chatController.busy
-                                ? 14 : input.text.length > 0 ? 18 : 22
-                font.weight: Font.Light
-                font.family: "Segoe UI"
-            }
-
-            MouseArea {
-                id: leadingMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    if (input.text.length > 0)
-                        input.clear()
-                    input.forceActiveFocus()
-                }
-                ToolTip.visible: containsMouse
-                ToolTip.delay: 500
-                ToolTip.text: input.text.length > 0
-                              ? qsTr("清空输入") : qsTr("输入消息")
-            }
-
-            SequentialAnimation on opacity {
-                running: chatController.busy
-                loops: Animation.Infinite
-                NumberAnimation { to: 0.55; duration: 480 }
-                NumberAnimation { to: 1.0; duration: 480 }
-            }
-        }
-
         TextField {
             id: input
 
             objectName: "chatComposerInput"
             anchors.left: parent.left
-            anchors.leftMargin: 52
+            anchors.leftMargin: 18
             anchors.right: sendButton.left
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
@@ -237,22 +186,36 @@ Window {
             ToolTip.delay: 500
             ToolTip.text: qsTr("发送")
 
-            contentItem: Text {
-                text: "↑"
-                color: sendButton.enabled ? "#FFFFFF" : "#AAB4C1"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 19
-                font.weight: Font.DemiBold
-                font.family: "Segoe UI"
+            contentItem: Canvas {
+                property string arrowColor: sendButton.enabled
+                                            ? "#FFFFFF" : "#AAB4C1"
+
+                onArrowColorChanged: requestPaint()
+                onPaint: {
+                    var painter = getContext("2d")
+                    var centerX = width / 2
+                    var centerY = height / 2
+                    painter.clearRect(0, 0, width, height)
+                    painter.strokeStyle = arrowColor
+                    painter.lineWidth = 2.8
+                    painter.lineCap = "round"
+                    painter.lineJoin = "round"
+                    painter.beginPath()
+                    painter.moveTo(centerX, centerY + 7)
+                    painter.lineTo(centerX, centerY - 7)
+                    painter.moveTo(centerX - 6, centerY - 1)
+                    painter.lineTo(centerX, centerY - 7)
+                    painter.lineTo(centerX + 6, centerY - 1)
+                    painter.stroke()
+                }
             }
 
             background: Rectangle {
                 radius: 19
                 color: !sendButton.enabled
                        ? "#70E4ECF7"
-                       : sendButton.down ? "#D577A7EA"
-                       : sendButton.hovered ? "#E9A8C9FA" : "#D89CC1F7"
+                       : sendButton.down ? "#EE3F70C4"
+                       : sendButton.hovered ? "#ED4F82D4" : "#E65D8DDD"
                 border.width: 1
                 border.color: sendButton.enabled ? "#C8FFFFFF" : "#7FFFFFFF"
 

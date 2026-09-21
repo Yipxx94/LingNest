@@ -52,6 +52,8 @@ Window {
 
     SettingsWindow {
         id: settingsWindow
+
+        ownerWindow: root
     }
 
     MouseArea {
@@ -76,6 +78,7 @@ Window {
             if (mouse.button !== Qt.LeftButton)
                 return
 
+            contextMenu.closeMenu()
             dragged = false
             pressGlobalX = root.x + mouse.x
             pressGlobalY = root.y + mouse.y

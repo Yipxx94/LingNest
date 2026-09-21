@@ -9,25 +9,24 @@ Window {
     property var ownerWindow: null
     property bool actionsPage: false
     property bool hasBeenActive: false
+    // The two 6 px card margins and two 8 px content margins need an
+    // additional 8 px below the last button so the rounded glass edge
+    // never clips its text or hover state.
+    readonly property int contentChromeHeight: 2 * (6 + 8) + 8
 
     objectName: "contextMenu"
     width: 232
-    height: actionsPage ? 382 : 326
+    height: Math.ceil((actionsPage ? actionsContent.implicitHeight
+                                   : mainContent.implicitHeight)
+                      + contentChromeHeight)
     visible: false
     color: "transparent"
     title: qsTr("LingNest")
     transientParent: ownerWindow
-    flags: Qt.Popup
+    flags: Qt.Tool
            | Qt.FramelessWindowHint
            | Qt.WindowStaysOnTopHint
            | Qt.NoDropShadowWindowHint
-
-    Behavior on height {
-        NumberAnimation {
-            duration: 180
-            easing.type: Easing.OutCubic
-        }
-    }
 
     function boundedPosition(preferredX, preferredY) {
         return petController.boundedPopupPosition(
@@ -43,6 +42,9 @@ Window {
         visible = true
         requestActivate()
         openAnimation.restart()
+        // Column implicitHeight may settle only after the popup is visible.
+        // Clamp once more with the final measured window size.
+        positionTimer.restart()
     }
 
     function closeMenu() {
@@ -58,21 +60,37 @@ Window {
 
     onActionsPageChanged: {
         if (visible)
-            Qt.callLater(clampToScreen)
+            positionTimer.restart()
     }
     onWidthChanged: {
         if (visible)
-            Qt.callLater(clampToScreen)
+            positionTimer.restart()
     }
     onHeightChanged: {
         if (visible)
-            Qt.callLater(clampToScreen)
+            positionTimer.restart()
     }
     onActiveChanged: {
         if (active)
             hasBeenActive = true
         else if (visible && hasBeenActive)
             closeMenu()
+    }
+
+    Connections {
+        target: Qt.application
+
+        function onStateChanged() {
+            if (root.visible && Qt.application.state !== Qt.ApplicationActive)
+                root.closeMenu()
+        }
+    }
+
+    Timer {
+        id: positionTimer
+        interval: 0
+        repeat: false
+        onTriggered: root.clampToScreen()
     }
 
     Shortcut {
@@ -149,6 +167,8 @@ Window {
             Behavior on opacity { NumberAnimation { duration: 120 } }
 
             Column {
+                id: mainContent
+                objectName: "mainMenuContent"
                 anchors.fill: parent
                 spacing: 2
 
@@ -214,6 +234,7 @@ Window {
                 Item { width: 1; height: 4 }
 
                 WarmMenuButton {
+                    objectName: "chatMenuButton"
                     width: parent.width
                     text: qsTr("开始对话")
                     onClicked: {
@@ -222,6 +243,7 @@ Window {
                     }
                 }
                 WarmMenuButton {
+                    objectName: "settingsMenuButton"
                     width: parent.width
                     text: qsTr("AI 设置")
                     onClicked: {
@@ -230,6 +252,7 @@ Window {
                     }
                 }
                 WarmMenuButton {
+                    objectName: "switchMenuButton"
                     width: parent.width
                     text: qsTr("切换角色")
                     onClicked: {
@@ -237,16 +260,8 @@ Window {
                         petInteraction.showCharacterSwitcher()
                     }
                 }
-
-                Item { width: 1; height: 4 }
-                Rectangle {
-                    width: parent.width
-                    height: 1
-                    color: "#52FFFFFF"
-                }
-                Item { width: 1; height: 4 }
-
                 WarmMenuButton {
+                    objectName: "pauseMenuButton"
                     width: parent.width
                     text: petInteraction.paused ? qsTr("继续活动") : qsTr("暂停活动")
                     onClicked: {
@@ -255,21 +270,14 @@ Window {
                     }
                 }
                 WarmMenuButton {
+                    objectName: "previewMenuButton"
                     width: parent.width
                     text: qsTr("动作预览")
                     showsArrow: true
                     onClicked: root.actionsPage = true
                 }
-
-                Item { width: 1; height: 4 }
-                Rectangle {
-                    width: parent.width
-                    height: 1
-                    color: "#52FFFFFF"
-                }
-                Item { width: 1; height: 4 }
-
                 WarmMenuButton {
+                    objectName: "quitMenuButton"
                     width: parent.width
                     text: qsTr("退出 LingNest")
                     destructive: true
@@ -296,6 +304,8 @@ Window {
             Behavior on opacity { NumberAnimation { duration: 120 } }
 
             Column {
+                id: actionsContent
+                objectName: "actionsMenuContent"
                 anchors.fill: parent
                 spacing: 2
 
@@ -371,6 +381,7 @@ Window {
                     }
                 }
                 WarmMenuButton {
+                    objectName: "sleepMenuButton"
                     width: parent.width
                     text: qsTr("睡觉")
                     onClicked: {

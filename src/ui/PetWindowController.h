@@ -49,6 +49,7 @@ public:
         qreal fallbackGlobalX,
         qreal fallbackGlobalY);
     Q_INVOKABLE bool endDrag();
+    Q_INVOKABLE QVariantMap availableScreenGeometry() const;
     Q_INVOKABLE QVariantMap boundedPopupPosition(
         qreal preferredGlobalX,
         qreal preferredGlobalY,

@@ -3,12 +3,14 @@
 #include <utility>
 
 #include <QCoreApplication>
+#include <QColor>
 #include <QDir>
 #include <QGuiApplication>
 #include <QIcon>
 #include <QImage>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickItem>
 #include <QQuickWindow>
 #include <QScreen>
 #include <QTemporaryDir>
@@ -171,6 +173,7 @@ private slots:
     void initTestCase();
     void mouseDragMovesWindowAndPersistsPosition();
     void clampsDragToAvailableScreen();
+    void releasedNativeDragReturnsFromEveryScreenEdge();
     void popupPositionStaysInsideAvailableScreen();
     void repeatedDragCoordinateDoesNotDrift();
     void autonomousWalkMovesAndTurnsAtScreenEdge();
@@ -301,30 +304,128 @@ void PetWindowControllerTest::clickDoubleClickAndContextMenuAreRouted()
     window->setPosition(
         available.right() - window->width() + 1,
         available.bottom() - window->height() + 1);
+    window->requestActivate();
+    QTRY_VERIFY(window->isActive());
 
     auto* contextMenu = window->findChild<QObject*>(
         QStringLiteral("contextMenu"), Qt::FindChildrenRecursively);
     QVERIFY(contextMenu != nullptr);
     auto* contextMenuWindow = qobject_cast<QQuickWindow*>(contextMenu);
     QVERIFY(contextMenuWindow != nullptr);
+    QCOMPARE(
+        contextMenuWindow->flags() & Qt::WindowType_Mask,
+        Qt::WindowFlags(Qt::Tool));
     QVERIFY(contextMenuWindow->flags().testFlag(Qt::NoDropShadowWindowHint));
     QTest::mouseClick(window, Qt::RightButton, Qt::NoModifier, center);
     QTRY_VERIFY(contextMenu->property("visible").toBool());
     QVERIFY(QTest::qWaitForWindowExposed(contextMenuWindow));
-    QTest::qWait(180);
-    QVERIFY(available.contains(contextMenuWindow->geometry()));
+    auto* mainMenuContent = contextMenuWindow->findChild<QQuickItem*>(
+        QStringLiteral("mainMenuContent"), Qt::FindChildrenRecursively);
+    auto* quitMenuButton = contextMenuWindow->findChild<QQuickItem*>(
+        QStringLiteral("quitMenuButton"), Qt::FindChildrenRecursively);
+    QVERIFY(mainMenuContent != nullptr);
+    QVERIFY(quitMenuButton != nullptr);
+    QTRY_VERIFY(mainMenuContent->implicitHeight() > 280);
+    QTRY_VERIFY(quitMenuButton->height() >= 36);
+    const QStringList mainRowNames {
+        QStringLiteral("chatMenuButton"),
+        QStringLiteral("settingsMenuButton"),
+        QStringLiteral("switchMenuButton"),
+        QStringLiteral("pauseMenuButton"),
+        QStringLiteral("previewMenuButton"),
+        QStringLiteral("quitMenuButton")
+    };
+    QVector<QQuickItem*> mainRows;
+    for (const QString& rowName : mainRowNames) {
+        auto* row = contextMenuWindow->findChild<QQuickItem*>(
+            rowName, Qt::FindChildrenRecursively);
+        QVERIFY2(row != nullptr, qPrintable(rowName));
+        mainRows.append(row);
+    }
+    for (int index = 1; index < mainRows.size(); ++index) {
+        const qreal gap = mainRows.at(index)->y()
+            - (mainRows.at(index - 1)->y()
+                + mainRows.at(index - 1)->height());
+        QCOMPARE(qRound(gap), 2);
+    }
+    QTRY_VERIFY(contextMenuWindow->height()
+        >= qCeil(mainMenuContent->implicitHeight() + 36));
+    const qreal quitButtonBottom = quitMenuButton->mapToScene(
+        QPointF(0, quitMenuButton->height())).y();
+    QVERIFY2(quitButtonBottom <= contextMenuWindow->height() - 20,
+        "The final main-menu action is clipped by the glass card");
+    QTRY_VERIFY(available.contains(contextMenuWindow->geometry()));
+    QTest::qWait(220);
     const QImage menuFrame = contextMenuWindow->grabWindow();
     QVERIFY(!menuFrame.isNull());
     QVERIFY(saveQaImage(menuFrame, QStringLiteral("context-menu.png")));
 
-    contextMenu->setProperty("actionsPage", true);
-    QTRY_COMPARE(contextMenuWindow->height(), 382);
+    auto* chatMenuButton = mainRows.constFirst();
+    const QPoint chatButtonCenter = chatMenuButton->mapToScene(
+        QPointF(chatMenuButton->width() / 2,
+                chatMenuButton->height() / 2)).toPoint();
+    QTest::mouseMove(contextMenuWindow, chatButtonCenter);
+    QTRY_VERIFY(chatMenuButton->property("pointerHovered").toBool());
+    QTest::qWait(300);
+    QVERIFY2(chatMenuButton->property("pointerHovered").toBool(),
+        "A menu row must remain highlighted until the pointer leaves it");
+    auto* chatButtonBackground = chatMenuButton->property("background")
+        .value<QObject*>();
+    QVERIFY(chatButtonBackground != nullptr);
+    QCOMPARE(chatButtonBackground->property("color").value<QColor>(),
+        QColor(QStringLiteral("#4CFFFFFF")));
+    QTest::mouseMove(contextMenuWindow, QPoint(2, 2));
+    QTRY_VERIFY(!chatMenuButton->property("pointerHovered").toBool());
+    QTRY_COMPARE(chatButtonBackground->property("color").value<QColor>(),
+        QColor(Qt::transparent));
+
+    auto* previewMenuButton = contextMenuWindow->findChild<QQuickItem*>(
+        QStringLiteral("previewMenuButton"), Qt::FindChildrenRecursively);
+    QVERIFY(previewMenuButton != nullptr);
+    const QPoint previewButtonCenter = previewMenuButton->mapToScene(
+        QPointF(previewMenuButton->width() / 2,
+                previewMenuButton->height() / 2)).toPoint();
+    QTest::mouseClick(
+        contextMenuWindow, Qt::LeftButton, Qt::NoModifier, previewButtonCenter);
+    QTRY_VERIFY(contextMenu->property("actionsPage").toBool());
+    auto* actionsMenuContent = contextMenuWindow->findChild<QQuickItem*>(
+        QStringLiteral("actionsMenuContent"), Qt::FindChildrenRecursively);
+    auto* sleepMenuButton = contextMenuWindow->findChild<QQuickItem*>(
+        QStringLiteral("sleepMenuButton"), Qt::FindChildrenRecursively);
+    QVERIFY(actionsMenuContent != nullptr);
+    QVERIFY(sleepMenuButton != nullptr);
+    QTRY_VERIFY(actionsMenuContent->implicitHeight() > 350);
+    QTRY_VERIFY(sleepMenuButton->height() >= 36);
+    QTRY_VERIFY(contextMenuWindow->height()
+        >= qCeil(actionsMenuContent->implicitHeight() + 36));
+    const qreal sleepButtonBottom = sleepMenuButton->mapToScene(
+        QPointF(0, sleepMenuButton->height())).y();
+    QVERIFY2(sleepButtonBottom <= contextMenuWindow->height() - 20,
+        "The final action-preview item is clipped by the glass card");
     QTRY_VERIFY(available.contains(contextMenuWindow->geometry()));
-    QTest::qWait(80);
+    QTest::qWait(220);
     const QImage actionMenuFrame = contextMenuWindow->grabWindow();
     QVERIFY(!actionMenuFrame.isNull());
     QVERIFY(saveQaImage(
         actionMenuFrame, QStringLiteral("context-actions-menu.png")));
+
+    // A click on the pet must dismiss a menu that was opened by right-click.
+    QTest::mouseClick(window, Qt::LeftButton, Qt::NoModifier, center);
+    QTRY_VERIFY(!contextMenuWindow->isVisible());
+
+    // Focusing another window must dismiss it as well.
+    window->requestActivate();
+    QTRY_VERIFY(window->isActive());
+    QTest::mouseClick(window, Qt::RightButton, Qt::NoModifier, center);
+    QTRY_VERIFY(contextMenuWindow->isVisible());
+    QQuickWindow otherWindow;
+    otherWindow.setGeometry(
+        available.left() + 40, available.top() + 40, 160, 120);
+    otherWindow.show();
+    QVERIFY(QTest::qWaitForWindowExposed(&otherWindow));
+    otherWindow.requestActivate();
+    QTRY_VERIFY(otherWindow.isActive());
+    QTRY_VERIFY(!contextMenuWindow->isVisible());
 }
 
 void PetWindowControllerTest::popupPositionStaysInsideAvailableScreen()
@@ -342,6 +443,11 @@ void PetWindowControllerTest::popupPositionStaysInsideAvailableScreen()
     QScreen* screen = QGuiApplication::primaryScreen();
     QVERIFY(screen != nullptr);
     const QRect available = screen->availableGeometry();
+    const QVariantMap availableMap = controller.availableScreenGeometry();
+    QCOMPARE(availableMap.value(QStringLiteral("x")).toInt(), available.x());
+    QCOMPARE(availableMap.value(QStringLiteral("y")).toInt(), available.y());
+    QCOMPARE(availableMap.value(QStringLiteral("width")).toInt(), available.width());
+    QCOMPARE(availableMap.value(QStringLiteral("height")).toInt(), available.height());
     window.setPosition(available.bottomRight() - QPoint(191, 207));
 
     constexpr int popupWidth = 232;
@@ -399,6 +505,48 @@ void PetWindowControllerTest::clampsDragToAvailableScreen()
     QVERIFY(controller.endDrag());
 
     QCOMPARE(window.position(), available.topLeft());
+}
+
+void PetWindowControllerTest::releasedNativeDragReturnsFromEveryScreenEdge()
+{
+    lingnest::character::CharacterDefinition character;
+    character.id = QStringLiteral("test-pet");
+    character.displayName = QStringLiteral("Test Pet");
+    character.scale = 1.0;
+
+    lingnest::ui::PetWindowController controller(character, nullptr);
+    QQuickWindow window;
+    window.resize(192, 208);
+    controller.attachWindow(&window);
+
+    QScreen* screen = QGuiApplication::primaryScreen();
+    QVERIFY(screen != nullptr);
+    const QRect available = screen->availableGeometry();
+    const QPoint initialPosition = available.center()
+        - QPoint(window.width() / 2, window.height() / 2);
+    const int maximumX = available.right() - window.width() + 1;
+    const int maximumY = available.bottom() - window.height() + 1;
+
+    const QVector<QPair<QPoint, QPoint>> edgeCases {
+        {QPoint(available.left() - window.width() - 50, initialPosition.y()),
+         QPoint(available.left(), initialPosition.y())},
+        {QPoint(available.right() + 50, initialPosition.y()),
+         QPoint(maximumX, initialPosition.y())},
+        {QPoint(initialPosition.x(), available.top() - window.height() - 50),
+         QPoint(initialPosition.x(), available.top())},
+        {QPoint(initialPosition.x(), available.bottom() + 50),
+         QPoint(initialPosition.x(), maximumY)}
+    };
+
+    for (const auto& edgeCase : edgeCases) {
+        window.setPosition(initialPosition);
+        controller.beginDrag(initialPosition.x() + window.width() / 2,
+                             initialPosition.y() + window.height() / 2);
+        // The native window manager moves the window without updateDrag().
+        window.setPosition(edgeCase.first);
+        QVERIFY(controller.endDrag());
+        QCOMPARE(window.position(), edgeCase.second);
+    }
 }
 
 void PetWindowControllerTest::repeatedDragCoordinateDoesNotDrift()
@@ -649,23 +797,99 @@ void PetWindowControllerTest::rendersChangingIdleFrames()
     QTRY_VERIFY(!bubbleWindow->isVisible());
     QVERIFY(QTest::qWaitForWindowExposed(chatWindow));
     QTest::qWait(180);
+    auto* composerInput = chatWindow->findChild<QQuickItem*>(
+        QStringLiteral("chatComposerInput"), Qt::FindChildrenRecursively);
+    QVERIFY(composerInput != nullptr);
+    QVERIFY(composerInput->mapToScene(QPointF()).x() <= 24);
     const QImage chatFrame = chatWindow->grabWindow();
     QVERIFY(!chatFrame.isNull());
     QCOMPARE(chatFrame.size(), chatWindow->size());
     QVERIFY(saveQaImage(chatFrame, QStringLiteral("chat-window.png")));
+    auto* sendButton = chatWindow->findChild<QQuickItem*>(
+        QStringLiteral("chatComposerSendButton"), Qt::FindChildrenRecursively);
+    QVERIFY(sendButton != nullptr);
+    QVERIFY(composerInput->setProperty("text", QStringLiteral("你好，今天想聊聊。")));
+    QTRY_VERIFY(sendButton->property("enabled").toBool());
+    QTest::qWait(120);
+    const QImage readyChatFrame = chatWindow->grabWindow();
+    QVERIFY(!readyChatFrame.isNull());
+    QVERIFY(saveQaImage(
+        readyChatFrame, QStringLiteral("chat-window-ready.png")));
     interaction.closeChat();
     QTRY_VERIFY(!chatWindow->isVisible());
     bubbleController.hide();
     QTRY_VERIFY(!bubbleWindow->isVisible());
 
+    const QPoint petBottomRight(
+        available.right() - window->width() + 1,
+        available.bottom() - window->height() + 1);
+    window->setPosition(petBottomRight);
     interaction.showSettings();
     QTRY_VERIFY(settingsWindow->isVisible());
     QVERIFY(QTest::qWaitForWindowExposed(settingsWindow));
+    QTest::qWait(220);
+    QTRY_VERIFY(available.contains(settingsWindow->geometry()));
+    QVERIFY(settingsWindow->flags().testFlag(Qt::FramelessWindowHint));
+    QVERIFY(settingsWindow->flags().testFlag(Qt::NoDropShadowWindowHint));
+    auto* settingsGlassCard = settingsWindow->findChild<QQuickItem*>(
+        QStringLiteral("settingsGlassCard"), Qt::FindChildrenRecursively);
+    QVERIFY(settingsGlassCard != nullptr);
+    auto* settingsCloseButton = settingsWindow->findChild<QQuickItem*>(
+        QStringLiteral("settingsCloseButton"), Qt::FindChildrenRecursively);
+    QVERIFY(settingsCloseButton != nullptr);
+    auto* settingsMaxTokensInput = settingsWindow->findChild<QQuickItem*>(
+        QStringLiteral("settingsMaxTokensInput"), Qt::FindChildrenRecursively);
+    auto* settingsSaveButton = settingsWindow->findChild<QQuickItem*>(
+        QStringLiteral("settingsSaveButton"), Qt::FindChildrenRecursively);
+    QVERIFY(settingsMaxTokensInput != nullptr);
+    QVERIFY(settingsSaveButton != nullptr);
+    QTRY_VERIFY(settingsSaveButton->property("enabled").toBool());
+    QVERIFY(settingsMaxTokensInput->setProperty("text", QStringLiteral("0")));
+    QTRY_VERIFY(!settingsSaveButton->property("enabled").toBool());
+    QVERIFY(settingsMaxTokensInput->setProperty("text", QStringLiteral("512")));
+    QTRY_VERIFY(settingsSaveButton->property("enabled").toBool());
     const QImage settingsFrame = settingsWindow->grabWindow();
     QVERIFY(!settingsFrame.isNull());
     QCOMPARE(settingsFrame.size(), settingsWindow->size());
-    interaction.closeSettings();
+    QVERIFY(saveQaImage(settingsFrame, QStringLiteral("settings-window.png")));
+    const QPoint settingsStart = settingsWindow->position();
+    const QPoint headerDragStart(140, 45);
+    const QPoint headerDragEnd = headerDragStart - QPoint(60, 20);
+    QTest::mousePress(
+        settingsWindow, Qt::LeftButton, Qt::NoModifier, headerDragStart);
+    QTest::mouseMove(settingsWindow, headerDragEnd, 50);
+    QTest::mouseRelease(
+        settingsWindow, Qt::LeftButton, Qt::NoModifier, headerDragEnd);
+    QTRY_VERIFY(settingsWindow->position() != settingsStart);
+    QVERIFY(available.contains(settingsWindow->geometry()));
+    auto* settingsFormScroll = settingsWindow->findChild<QQuickItem*>(
+        QStringLiteral("settingsFormScroll"), Qt::FindChildrenRecursively);
+    QVERIFY(settingsFormScroll != nullptr);
+    settingsWindow->setHeight(420);
+    QTRY_VERIFY(available.contains(settingsWindow->geometry()));
+    QTRY_VERIFY(settingsFormScroll->property("contentHeight").toReal()
+                > settingsFormScroll->height());
+    const QPoint closeButtonCenter = settingsCloseButton->mapToScene(
+        QPointF(settingsCloseButton->width() / 2,
+                settingsCloseButton->height() / 2)).toPoint();
+    QTest::mouseClick(
+        settingsWindow, Qt::LeftButton, Qt::NoModifier, closeButtonCenter);
     QTRY_VERIFY(!settingsWindow->isVisible());
+
+    const QVector<QPoint> otherEdges {
+        available.topLeft(),
+        QPoint(available.right() - window->width() + 1, available.top()),
+        QPoint(available.left(), available.bottom() - window->height() + 1)
+    };
+    for (const QPoint& petPosition : otherEdges) {
+        window->setPosition(petPosition);
+        interaction.showSettings();
+        QTRY_VERIFY(settingsWindow->isVisible());
+        QTest::qWait(80);
+        QTRY_VERIFY(available.contains(settingsWindow->geometry()));
+        interaction.closeSettings();
+        QTRY_VERIFY(!settingsWindow->isVisible());
+    }
 }
 
 } // namespace

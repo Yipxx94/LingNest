@@ -7,10 +7,16 @@ AbstractButton {
     property bool destructive: false
     property bool showsArrow: false
     property bool backIndicator: false
+    readonly property bool pointerHovered: control.enabled && pointerHover.hovered
 
     implicitHeight: 36
     hoverEnabled: true
     activeFocusOnTab: true
+
+    HoverHandler {
+        id: pointerHover
+        cursorShape: Qt.PointingHandCursor
+    }
 
     contentItem: Item {
         Text {
@@ -61,10 +67,10 @@ AbstractButton {
         radius: 10
         color: control.down
                ? (control.destructive ? "#24D65A54" : "#78FFFFFF")
-               : control.hovered || control.activeFocus
+               : control.pointerHovered
                  ? (control.destructive ? "#18D65A54" : "#4CFFFFFF")
                  : "transparent"
-        border.width: control.hovered || control.activeFocus ? 1 : 0
+        border.width: control.pointerHovered || control.activeFocus ? 1 : 0
         border.color: control.destructive ? "#32D65A54" : "#7FFFFFFF"
 
         Behavior on color { ColorAnimation { duration: 100 } }
