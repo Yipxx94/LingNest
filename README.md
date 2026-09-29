@@ -4,20 +4,20 @@ LingNest 是一个面向 Windows 10/11 的多角色 AI 桌宠框架。首个角�
 
 当前已完成工程骨架、桌宠窗口、动画状态机、桌面交互、轻量对话、AI Provider 与 SQLite 记忆：应用会加载配置化的渝爱角色包，显示透明、无边框、置顶的动态桌宠，支持平滑拖动、屏幕边界约束、位置持久化、点击反馈、右键菜单、贴近桌宠的对话输入、OpenAI 兼容服务以及跨重启的对话与长期记忆。
 
-## 首个发布候选
+## 当前版本
 
-当前源码版本号为 `v0.1.3`（候选版，改进菜单选中对比度、底部操作栏悬停稳定性及首次对话失焦关闭）。Windows x64 首选交付物是单文件安装程序；同时提供完整的免安装 ZIP。两种形式都由 Release 构建、`windeployqt`、应用本地 VC++ 运行库、角色运行资源和用户文档组成。构建过程会拒绝 API Key、用户配置、数据库、日志和调试符号进入发布包，并同时生成 SHA-256 与机器可读清单。
+当前源码版本号为 `v0.1.3`（最新 GitHub Release，改进菜单选中对比度、底部操作栏悬停稳定性及首次对话失焦关闭）。Windows x64 首选交付物是单文件安装程序；同时提供完整的免安装 ZIP。两种形式都由 Release 构建、`windeployqt`、应用本地 VC++ 运行库、角色运行资源和用户文档组成。构建过程会拒绝 API Key、用户配置、数据库、日志和调试符号进入发布包，并同时生成 SHA-256 与机器可读清单。
 
 ## 下载
 
-- **v0.1.3（候选版）**：[安装包与便携包](packages/v0.1.3/) · [更新说明](docs/release-notes-v0.1.3.md)
-- **v0.1.2（候选版）**：[安装包与便携包](packages/v0.1.2/) · [更新说明](docs/release-notes-v0.1.2.md)
+- **v0.1.3（最新发布）**：[GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.3) · [更新说明](docs/release-notes-v0.1.3.md)
+- **v0.1.2（历史版本）**：[GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.2) · [更新说明](docs/release-notes-v0.1.2.md)
 - **v0.1.1（已发布版本）**：[GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.1) · [更新说明](docs/release-notes-v0.1.1.md)
 - **v0.1.0（历史版本）**：[GitHub Release 下载页](https://github.com/Yipxx94/LingNest/releases/tag/v0.1.0) · [更新说明](docs/release-notes-v0.1.0.md)
 
-推荐普通用户下载 `v0.1.1` 安装版。`v0.1.3` 候选包及校验文件保存在 [`packages/v0.1.3/`](packages/v0.1.3/)；正式 GitHub Release 仍待跨环境签收。已发布版本文件、SHA-256 校验值和清单统一维护在 [`packages/`](packages/)；`v0.1.0` 发布时尚未提供安装版。
+推荐从最新的 `v0.1.3` Release 下载安装版。各版软件包、SHA-256 校验值和清单也保存在 [`packages/`](packages/)；`v0.1.0` 发布时尚未提供安装版。发布不代表跨设备验收已完成：安装/卸载、双显示器与不同 DPI 等仍待干净 Windows 设备复核，详见 [v0.1.3 验证记录](docs/release-validation-v0.1.3.md)。
 
-本机只有 Qt 5.15.2 兼容工具链，因此首包仍是兼容构建；Qt 5 的公网 HTTPS 依赖已经停止维护的 OpenSSL 1.1.1，本项目不会从其他软件目录拼装该依赖。正式联网发行前应使用 Qt 6 重建并在干净 Windows 上签收。本地 HTTP 兼容服务与其余桌宠能力不受此限制。
+本机只有 Qt 5.15.2 兼容工具链，因此当前软件包仍是兼容构建；Qt 5 的公网 HTTPS 依赖已经停止维护的 OpenSSL 1.1.1，本项目不会从其他软件目录拼装该依赖。公网 HTTPS 对话使用前应使用 Qt 6 重建并在干净 Windows 上签收。本地 HTTP 兼容服务与其余桌宠能力不受此限制。
 
 已实现的窗口行为：
 
@@ -132,9 +132,9 @@ cmake --build --preset release --target package_installer
 - [用户指南](docs/user-guide.md)
 - [隐私说明](docs/privacy.md)
 - [第三方组件与素材记录](docs/third-party-notices.md)
-- [v0.1.3 候选发布说明](docs/release-notes-v0.1.3.md)
+- [v0.1.3 发布说明](docs/release-notes-v0.1.3.md)
 - [v0.1.3 验证记录](docs/release-validation-v0.1.3.md)
-- [v0.1.2 候选发布说明](docs/release-notes-v0.1.2.md)
+- [v0.1.2 发布说明](docs/release-notes-v0.1.2.md)
 - [v0.1.2 验证记录](docs/release-validation-v0.1.2.md)
 - [v0.1.1 已发布版本说明](docs/release-notes-v0.1.1.md)
 - [v0.1.0 历史发布说明](docs/release-notes-v0.1.0.md)
