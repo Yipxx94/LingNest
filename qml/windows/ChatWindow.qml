@@ -61,10 +61,10 @@ Window {
         if (visible) {
             hasBeenActive = false
             reposition()
-            requestActivate()
-            input.forceActiveFocus()
+            activationTimer.restart()
             appearAnimation.restart()
         } else {
+            activationTimer.stop()
             appearAnimation.stop()
             opacity = 1
         }
@@ -78,6 +78,28 @@ Window {
     onClosing: {
         close.accepted = false
         petInteraction.closeChat()
+    }
+
+    Connections {
+        target: Qt.application
+
+        function onStateChanged() {
+            if (root.visible && root.hasBeenActive
+                    && Qt.application.state !== Qt.ApplicationActive)
+                petInteraction.closeChat()
+        }
+    }
+
+    Timer {
+        id: activationTimer
+        interval: 30
+        repeat: false
+        onTriggered: {
+            if (!root.visible)
+                return
+            root.requestActivate()
+            input.forceActiveFocus()
+        }
     }
 
     Connections {

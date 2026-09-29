@@ -1,0 +1,9 @@
+{
+  "name": "LingNest",
+  "version": "0.1.3",
+  "platform": "windows-x64",
+  "recommendedArtifact": "LingNest-v0.1.3-windows-x64-setup.exe",
+  "installerBytes": 26674324,
+  "installerSha256": "6b03b75618425f98c2265064751179e67cad4cbe8cd340998799540448494473",
+  "portableArtifact": "LingNest-v0.1.3-windows-x64-portable.zip"
+}

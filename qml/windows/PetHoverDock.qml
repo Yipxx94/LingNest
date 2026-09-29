@@ -9,8 +9,10 @@ Window {
     property var ownerWindow: null
     property bool petHovered: false
     property bool suppressed: false
+    property bool dockHoverHeld: false
     readonly property bool controlsHovered: composeMouse.containsMouse
                                             || responseMouse.containsMouse
+                                            || dividerMouse.containsMouse
 
     objectName: "petHoverDock"
     width: 102
@@ -18,7 +20,7 @@ Window {
     visible: !suppressed
              && !petInteraction.chatVisible
              && !petInteraction.settingsVisible
-             && (petHovered || controlsHovered || hideDelay.running)
+             && (petHovered || dockHoverHeld || hideDelay.running)
     color: "transparent"
     title: qsTr("对话")
     transientParent: ownerWindow
@@ -38,6 +40,15 @@ Window {
         petHovered = false
         if (!controlsHovered)
             hideDelay.restart()
+    }
+
+    onControlsHoveredChanged: {
+        if (controlsHovered) {
+            dockHoverHeld = true
+            hideDelay.stop()
+        } else if (!petHovered && dockHoverHeld) {
+            hideDelay.restart()
+        }
     }
 
     function reposition() {
@@ -60,6 +71,8 @@ Window {
             reposition()
             revealAnimation.restart()
         } else {
+            dockHoverHeld = false
+            hideDelay.stop()
             revealAnimation.stop()
             glassSurface.opacity = 1
             glassSurface.scale = 1
@@ -84,6 +97,10 @@ Window {
         id: hideDelay
         interval: 260
         repeat: false
+        onTriggered: {
+            if (!root.petHovered && !root.controlsHovered)
+                root.dockHoverHeld = false
+        }
     }
 
     ParallelAnimation {
@@ -127,6 +144,7 @@ Window {
 
     LiquidGlassSurface {
         id: glassSurface
+        objectName: "dockGlassSurface"
 
         x: 3
         y: 2
@@ -134,7 +152,7 @@ Window {
         height: parent.height - 7
         radius: 14
         clearMaterial: true
-        highlighted: root.controlsHovered
+        highlighted: root.dockHoverHeld
 
         Row {
             anchors.fill: parent
@@ -170,11 +188,6 @@ Window {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onEntered: hideDelay.stop()
-                    onExited: {
-                        if (!root.petHovered && !root.controlsHovered)
-                            hideDelay.restart()
-                    }
                     onClicked: {
                         root.petHovered = false
                         hideDelay.stop()
@@ -192,6 +205,13 @@ Window {
                 width: 1
                 height: 21
                 color: "#709AA7B5"
+
+                MouseArea {
+                    id: dividerMouse
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    hoverEnabled: true
+                }
             }
 
             Item {
@@ -227,14 +247,9 @@ Window {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onEntered: hideDelay.stop()
-                    onExited: {
-                        if (!root.petHovered && !root.controlsHovered)
-                            hideDelay.restart()
-                    }
                     onClicked: {
                         root.petHovered = false
-                        hideDelay.restart()
+                        hideDelay.stop()
                         petInteraction.quickResponse()
                     }
                     ToolTip.visible: containsMouse

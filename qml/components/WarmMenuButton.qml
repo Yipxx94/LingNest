@@ -66,13 +66,11 @@ AbstractButton {
     background: Rectangle {
         radius: 10
         color: control.down
-               ? (control.destructive ? "#24D65A54" : "#78FFFFFF")
+               ? (control.destructive ? "#90E47771" : "#A87EA8DF")
                : control.pointerHovered
-                 ? (control.destructive ? "#18D65A54" : "#4CFFFFFF")
+                 ? (control.destructive ? "#6BE99891" : "#8098BAE8")
                  : "transparent"
-        border.width: control.pointerHovered || control.activeFocus ? 1 : 0
-        border.color: control.destructive ? "#32D65A54" : "#7FFFFFFF"
-
-        Behavior on color { ColorAnimation { duration: 100 } }
+        border.width: control.pointerHovered ? 1 : 0
+        border.color: control.destructive ? "#A9DC7774" : "#B26A9DDE"
     }
 }

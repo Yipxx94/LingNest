@@ -178,6 +178,7 @@ private slots:
     void repeatedDragCoordinateDoesNotDrift();
     void autonomousWalkMovesAndTurnsAtScreenEdge();
     void clickDoubleClickAndContextMenuAreRouted();
+    void firstChatOpenDismissesOnFocusLoss();
     void rendersChangingIdleFrames();
 };
 
@@ -373,7 +374,31 @@ void PetWindowControllerTest::clickDoubleClickAndContextMenuAreRouted()
         .value<QObject*>();
     QVERIFY(chatButtonBackground != nullptr);
     QCOMPARE(chatButtonBackground->property("color").value<QColor>(),
-        QColor(QStringLiteral("#4CFFFFFF")));
+        QColor(QStringLiteral("#8098BAE8")));
+    QVERIFY(saveQaImage(contextMenuWindow->grabWindow(),
+        QStringLiteral("context-menu-hover-chat.png")));
+    for (int index = 1; index < mainRows.size(); ++index) {
+        QQuickItem* hoveredRow = mainRows.at(index);
+        const QPoint rowCenter = hoveredRow->mapToScene(
+            QPointF(hoveredRow->width() / 2,
+                    hoveredRow->height() / 2)).toPoint();
+        QTest::mouseMove(contextMenuWindow, rowCenter);
+        QTRY_VERIFY(hoveredRow->property("pointerHovered").toBool());
+        for (int otherIndex = 0; otherIndex < mainRows.size(); ++otherIndex) {
+            if (otherIndex == index) {
+                continue;
+            }
+            auto* background = mainRows.at(otherIndex)->property("background")
+                .value<QObject*>();
+            QVERIFY(background != nullptr);
+            QCOMPARE(background->property("color").value<QColor>(),
+                QColor(Qt::transparent));
+        }
+        if (index == 1) {
+            QVERIFY(saveQaImage(contextMenuWindow->grabWindow(),
+                QStringLiteral("context-menu-hover-settings.png")));
+        }
+    }
     QTest::mouseMove(contextMenuWindow, QPoint(2, 2));
     QTRY_VERIFY(!chatMenuButton->property("pointerHovered").toBool());
     QTRY_COMPARE(chatButtonBackground->property("color").value<QColor>(),
@@ -422,10 +447,76 @@ void PetWindowControllerTest::clickDoubleClickAndContextMenuAreRouted()
     otherWindow.setGeometry(
         available.left() + 40, available.top() + 40, 160, 120);
     otherWindow.show();
-    QVERIFY(QTest::qWaitForWindowExposed(&otherWindow));
+    QTRY_VERIFY(otherWindow.isVisible());
     otherWindow.requestActivate();
     QTRY_VERIFY(otherWindow.isActive());
     QTRY_VERIFY(!contextMenuWindow->isVisible());
+}
+
+void PetWindowControllerTest::firstChatOpenDismissesOnFocusLoss()
+{
+    lingnest::character::CharacterDefinition character;
+    character.id = QStringLiteral("test-pet");
+    character.displayName = QStringLiteral("Test Pet");
+    character.scale = 1.0;
+
+    lingnest::ui::PetWindowController controller(character, nullptr);
+    FakeAnimationView animationView;
+    FakeInteraction interaction;
+    FakeAISettings aiSettings;
+    lingnest::ui::SpeechBubbleController bubbleController;
+    lingnest::ui::ChatController chatController(character);
+    QQmlApplicationEngine engine;
+    installQmlContext(
+        engine,
+        &controller,
+        &animationView,
+        &interaction,
+        &bubbleController,
+        &chatController,
+        &aiSettings);
+    engine.load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));
+    QVERIFY(!engine.rootObjects().isEmpty());
+
+    auto* window = qobject_cast<QQuickWindow*>(engine.rootObjects().constFirst());
+    QVERIFY(window != nullptr);
+    controller.attachWindow(window);
+    window->show();
+    QVERIFY(QTest::qWaitForWindowExposed(window));
+    auto* hoverDock = window->findChild<QQuickWindow*>(
+        QStringLiteral("petHoverDock"), Qt::FindChildrenRecursively);
+    auto* chatWindow = window->findChild<QQuickWindow*>(
+        QStringLiteral("chatWindow"), Qt::FindChildrenRecursively);
+    QVERIFY(hoverDock != nullptr);
+    QVERIFY(chatWindow != nullptr);
+
+    QQuickWindow otherWindow;
+    otherWindow.setGeometry(100, 100, 160, 120);
+    otherWindow.show();
+    QTRY_VERIFY(otherWindow.isVisible());
+    otherWindow.requestActivate();
+    QTRY_VERIFY(otherWindow.isActive());
+
+    QVERIFY(QMetaObject::invokeMethod(hoverDock, "petEntered"));
+    QTRY_VERIFY(hoverDock->isVisible());
+    QVERIFY(QTest::qWaitForWindowExposed(hoverDock));
+    QTest::mouseClick(hoverDock, Qt::LeftButton, Qt::NoModifier,
+                      QPoint(hoverDock->width() / 4, hoverDock->height() / 2));
+    QTRY_VERIFY(interaction.isChatVisible());
+    QTRY_VERIFY(chatWindow->isActive());
+
+    otherWindow.requestActivate();
+    QTRY_VERIFY(otherWindow.isActive());
+    QTRY_VERIFY(!interaction.isChatVisible());
+    QTRY_VERIFY(!chatWindow->isVisible());
+
+    QVERIFY(QMetaObject::invokeMethod(hoverDock, "petEntered"));
+    QTRY_VERIFY(hoverDock->isVisible());
+    QTest::mouseClick(hoverDock, Qt::LeftButton, Qt::NoModifier,
+                      QPoint(hoverDock->width() / 4, hoverDock->height() / 2));
+    QTRY_VERIFY(chatWindow->isActive());
+    otherWindow.requestActivate();
+    QTRY_VERIFY(!interaction.isChatVisible());
 }
 
 void PetWindowControllerTest::popupPositionStaysInsideAvailableScreen()
@@ -701,6 +792,26 @@ void PetWindowControllerTest::rendersChangingIdleFrames()
     const QImage hoverDockFrame = hoverDock->grabWindow();
     QVERIFY(!hoverDockFrame.isNull());
     QVERIFY(saveQaImage(hoverDockFrame, QStringLiteral("hover-chat-dock.png")));
+    auto* dockGlassSurface = hoverDock->findChild<QQuickItem*>(
+        QStringLiteral("dockGlassSurface"), Qt::FindChildrenRecursively);
+    QVERIFY(dockGlassSurface != nullptr);
+    const int dockCenterY = hoverDock->height() / 2;
+    QTest::mouseMove(hoverDock, QPoint(25, dockCenterY));
+    QTRY_VERIFY(hoverDock->property("controlsHovered").toBool());
+    QVERIFY(QMetaObject::invokeMethod(hoverDock, "petExited"));
+    QTRY_VERIFY(hoverDock->property("dockHoverHeld").toBool());
+    QSignalSpy dockVisibilitySpy(hoverDock, SIGNAL(visibleChanged(bool)));
+    QVERIFY(dockVisibilitySpy.isValid());
+    for (const int x : {50, 77, 50, 25, 50, 77}) {
+        QTest::mouseMove(hoverDock, QPoint(x, dockCenterY));
+        QCoreApplication::processEvents();
+        QVERIFY(hoverDock->isVisible());
+        QVERIFY(hoverDock->property("dockHoverHeld").toBool());
+        QVERIFY(dockGlassSurface->property("highlighted").toBool());
+    }
+    QTest::qWait(320);
+    QVERIFY(hoverDock->isVisible());
+    QCOMPARE(dockVisibilitySpy.count(), 0);
     QTest::mouseClick(
         hoverDock,
         Qt::LeftButton,

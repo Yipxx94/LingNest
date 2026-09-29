@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(
     LingNest
-    VERSION 0.1.2
+    VERSION 0.1.3
     DESCRIPTION "A multi-character AI desktop pet framework"
     LANGUAGES CXX
 )

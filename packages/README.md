@@ -2,6 +2,16 @@
 
 这里按版本保存面向 Windows 10/11 x64 的可下载软件包。请区分候选版与已正式发布的版本，并在运行前核对同目录中的 SHA-256 文件。
 
+## v0.1.3（候选版）
+
+- [安装版：LingNest-v0.1.3-windows-x64-setup.exe](v0.1.3/LingNest-v0.1.3-windows-x64-setup.exe)
+- [安装版 SHA-256](v0.1.3/LingNest-v0.1.3-windows-x64-setup.sha256)
+- [免安装版：LingNest-v0.1.3-windows-x64-portable.zip](v0.1.3/LingNest-v0.1.3-windows-x64-portable.zip)
+- [免安装版 SHA-256](v0.1.3/LingNest-v0.1.3-windows-x64-portable.sha256)
+- [更新说明](../docs/release-notes-v0.1.3.md) · [验证记录](../docs/release-validation-v0.1.3.md)
+
+此版本通过本机自动化测试和便携包启动检查，但尚未完成干净 Windows 设备上的安装/卸载、双显示器和代码签名签收，因此暂不作为正式 GitHub Release。普通用户仍推荐使用 v0.1.1 正式版。
+
 ## v0.1.2（候选版）
 
 - [安装版：LingNest-v0.1.2-windows-x64-setup.exe](v0.1.2/LingNest-v0.1.2-windows-x64-setup.exe)

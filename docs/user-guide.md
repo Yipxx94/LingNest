@@ -1,8 +1,8 @@
-# LingNest v0.1.2 用户指南
+# LingNest v0.1.3 用户指南
 
 ## 安装与启动
 
-LingNest v0.1.2 支持 Windows 10/11 x64。推荐双击 `LingNest-v0.1.2-windows-x64-setup.exe` 安装；安装程序会把应用、Qt 运行库、Qt 插件、角色资源和 VC++ 运行库一起放到正确位置，并创建开始菜单入口。
+LingNest v0.1.3 支持 Windows 10/11 x64。推荐双击 `LingNest-v0.1.3-windows-x64-setup.exe` 安装；安装程序会把应用、Qt 运行库、Qt 插件、角色资源和 VC++ 运行库一起放到正确位置，并创建开始菜单入口。
 
 若使用便携 ZIP，必须先把 ZIP 完整解压到一个可写目录，再双击解压目录中的 `LingNest.exe`。不要在压缩包预览窗口中直接运行，也不要只把 EXE 单独复制到其他电脑；依赖文件和目录需要保持原有相对位置。仓库 `build/release/` 下的同名 EXE 是开发构建产物，不是发布包。
 
